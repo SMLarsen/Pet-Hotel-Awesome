@@ -3,32 +3,33 @@ var router = express.Router();
 var pg = require('pg');
 var connectionString = 'postgres://localhost:5432/Sigma';
 
-router.get('/', function(req, res) {
-  console.log('get owners request');
-
-  pg.connect(connectionString, function(err, client, done) {
-    if (err) {
-      console.log('Could not connect to database');
-      res.sendStatus(500);
-    }
-
-    client.query('SELECT * FROM owners', function(err, result) {
-      done();
-
-      if(err) {
-        console.log('select query error: ', err);
-        res.sendStatus(500);
-      }
-      res.send(result.rows);
-
-    });
-
-  });
-
-});
+// router.get('/', function(req, res) {
+//   console.log('get owners request');
+//
+//   pg.connect(connectionString, function(err, client, done) {
+//     if (err) {
+//       console.log('Could not connect to database');
+//       res.sendStatus(500);
+//     }
+//
+//     client.query('SELECT * FROM owners', function(err, result) {
+//       done();
+//
+//       if(err) {
+//         console.log('select query error: ', err);
+//         res.sendStatus(500);
+//       }
+//       res.send(result.rows);
+//
+//     });
+//
+//   });
+//
+// });
 
 router.post('/', function(req, res) {
-  var newOwner = req.body;
+  newOwner = req.body;
+  console.log("this is the new: ", newOwner);
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('Could not connect to database');
@@ -36,8 +37,9 @@ router.post('/', function(req, res) {
     }
 
     client.query(
-      'INSERT INTO owners (id, first_name, last_name) ' + 'VALUES ($1, $2, $3)',
-      [newOwner.id, newOwner.first_name, newOwner.last_name],
+      'INSERT INTO owners (first_name, last_name) ' +
+      'VALUES ($1, $2)',
+      [newOwner.firstName, newOwner.lastName],
       function(err, result) {
         done();
 
@@ -47,8 +49,7 @@ router.post('/', function(req, res) {
         } else{
           res.sendStatus(201);
         }
-      }
-    );
+    });
   });
 });
 
