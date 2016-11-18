@@ -18,7 +18,6 @@ router.post('/', function(req, res) {
       'VALUES ($1, $2, $3, $4) RETURNING id AS pet_id',
       [newPet.petName, newPet.petBreed, newPet.petColor, newPet.owners_id],
       function(err, result) {
-        console.log("result" ,result);
         done();
 
         if(err) {
@@ -28,10 +27,27 @@ router.post('/', function(req, res) {
           var petId = result.rows[0].pet_id;
           console.log("This is the petid:", petId);
           res.sendStatus(201);
-          
-        }
-      });
-  });
-});
 
-module.exports = router;
+          // newVisit= req.body;
+
+          client.query(
+            //picks the visits table, and specifies what fields to populate
+            'INSERT INTO visits (check_in_date, pets_id) ' +
+            //tells visits what the values are GOINg to be..
+            'VALUES (NOW(), $1)',
+             [petId],
+            function(err, result) {
+              console.log("New: " ,result);
+              done();
+              if(err) {
+                console.log("error");
+              } else {
+                console.log("working visits");
+              }
+            });
+          }
+        });
+      });
+    });
+
+    module.exports = router;
