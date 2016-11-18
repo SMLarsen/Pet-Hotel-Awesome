@@ -1,7 +1,7 @@
 $(document).ready(function () {
   console.log("js working");
 
-//  getPets();
+  getPets();
 
   $('#add-pet').on('click', function(event){
       event.preventDefault();
@@ -22,7 +22,7 @@ function addPet() {
     url: '/pets',
     data: pets,
     success: function(response) {
-      // getPets();
+      getPets();
       console.log('server is talking', response);
     },
     error: function() {
@@ -64,16 +64,5 @@ function appendPets(pets) {
     console.log(string);
     $el.append(string);
 
-    // $el = $('.col-md-12');
-    // var pet = pets[i];
-    // console.log(pet);
-    // $el.data('id', pet.id);
-    // $el.append('<td name="owner" value="' + pet.name + '"></td>');
-    // $el.append('<td name="petName" value="' + pet.name + '"></td>');
-    // $el.append('<td name="breed" value="' + pet.name + '"></td>');
-    // $el.append('<td name="color" value="' + pet.name + '"></td>');
-    // $el.append('<td name="update" value="' + pet.name + '"></td>');
-    // $el.append('<td name="delete" value="' + pet.name + '"></td>');
-    // $el.append('<td name="checkInOut" value="' + pet.name + '"></td>');
   }
 }
