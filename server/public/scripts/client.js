@@ -1,3 +1,9 @@
+var toggleBtn = '<label class="switch">' ;
+toggleBtn += '<input class="switch-input" type="checkbox" />' ;
+toggleBtn += '<span class="switch-label" data-on="Out" data-off="In"></span>' ;
+toggleBtn += '<span class="switch-handle"></span>' ;
+toggleBtn += '</label>';
+
 $(document).ready(function () {
 
   getPets();
@@ -20,6 +26,7 @@ function addPet() {
     $.each($('#pet-form').serializeArray(), function (i, field) {
     pets[field.name] = field.value;
   });
+
   console.log('pets: ', pets);
 
   $.ajax({
@@ -64,8 +71,8 @@ function appendPets(pets) {
     string += '<td>' + pets[i].color +'</td>';
     string += '<td><button class="btn updateBtn" data-id=' + pets.id +'>Update</button></td>';
     string += '<td><button class="btn deleteBtn" data-id=' + pets.id +'>Delete</button></td>';
-    string += '<td><button class="btn checkBtn" data-id=' + pets.id +'>In</button></td>';
-    string += '</tr>';
+    string += '<td>';
+    string += toggleBtn + '</td></tr>';
     // console.log(string);
     $el.append(string);
 
