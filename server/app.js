@@ -7,7 +7,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Our routes
 
-
 // Catchall route
 app.get('/', function (req, res) {
   res.sendFile(path.resolve('./server/public/views/index.html'));
