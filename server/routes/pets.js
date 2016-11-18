@@ -15,21 +15,23 @@ router.post('/', function(req, res) {
 
     client.query(
       'INSERT INTO pets (name, breed, color, owners_id) ' +
-      'VALUES ($1, $2, $3, $4)',
+      'VALUES ($1, $2, $3, $4) RETURNING id AS pet_id',
       [newPet.petName, newPet.petBreed, newPet.petColor, newPet.owners_id],
       function(err, result) {
+        console.log("result" ,result);
         done();
 
         if(err) {
           console.log('insert query error: ', err);
           res.sendStatus(500);
         } else {
+          var petId = result.rows[0].pet_id;
+          console.log("This is the petid:", petId);
           res.sendStatus(201);
+          
         }
       });
-
   });
-
 });
 
 module.exports = router;
