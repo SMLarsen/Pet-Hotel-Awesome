@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  console.log("js working");
 
   getPets();
 
@@ -7,6 +6,12 @@ $(document).ready(function () {
       event.preventDefault();
       addPet();
       getPets();
+  });
+
+  $('#register-owner').on('click', function(event){
+    event.preventDefault();
+    registerOwner();
+
   });
 });
 
@@ -61,8 +66,29 @@ function appendPets(pets) {
     string += '<td><button class="btn deleteBtn" data-id=' + pets.id +'>Delete</button></td>';
     string += '<td><button class="btn checkBtn" data-id=' + pets.id +'>In</button></td>';
     string += '</tr>';
-    console.log(string);
+    // console.log(string);
     $el.append(string);
 
   }
+}
+
+function registerOwner() {
+  var owners = {};
+  $.each($('#owner-form').serializeArray(), function (i, field) {
+    owners[field.name] = field.value;
+  });
+  console.log('owners: ', owners);
+
+  $.ajax({
+    type: 'POST',
+    url: '/owners',
+    data: owners,
+    success: function(response) {
+      //get Owners();
+      console.log('server is functional', response);
+    },
+    error: function() {
+      console.log('could not register a new owner');
+    }
+  })
 }

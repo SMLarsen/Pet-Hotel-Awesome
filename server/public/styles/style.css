@@ -1,0 +1,12 @@
+#petDisplay {
+  margin-top: 20px;
+  /*border-top: 2px solid grey;*/
+}
+
+th {
+  padding: 5px;
+}
+
+#owner-dropdown {
+  width: 200px;
+}
