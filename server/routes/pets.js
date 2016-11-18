@@ -32,4 +32,31 @@ router.post('/', function(req, res) {
 
 });
 
+router.get('/', function(req, res) {
+  console.log('get request');
+  // get pets from DB
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+
+    client.query('SELECT pets.id, name, breed, color, owners.first_name, owners.last_name FROM pets JOIN owners ON pets.owners_id=owners.id;', function(err, result) {
+      done(); // close the connection.
+      // console.log('the client!:', client);
+
+      if(err) {
+        console.log('select query error: ', err);
+        res.sendStatus(500);
+      }
+      console.log("success");
+      console.log(result.rows);
+      res.send(result.rows);
+
+    });
+
+  });
+});
+
+
 module.exports = router;
