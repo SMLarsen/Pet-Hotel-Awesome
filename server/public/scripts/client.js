@@ -8,7 +8,6 @@ $(document).ready(function () {
 });
 
 function addPet() {
-  event.preventDefault();
   var pets = {};
     $.each($('#pet-form').serializeArray(), function (i, field) {
     pets[field.name] = field.value;
@@ -17,11 +16,11 @@ function addPet() {
 
   $.ajax({
     type: 'POST',
-    url: '/pets'
+    url: '/pets',
     data: pets,
     success: function(response) {
       // getPets();
-      console.log('server is talking');
+      console.log('server is talking', response);
     },
     error: function() {
       console.log('could not post a new pet');
