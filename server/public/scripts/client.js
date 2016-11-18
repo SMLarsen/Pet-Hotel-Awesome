@@ -4,6 +4,12 @@ $(document).ready(function () {
       event.preventDefault();
       addPet();
   });
+
+  $('#register-owner').on('click', function(event){
+    event.preventDefault();
+    registerOwner();
+
+  });
 });
 
 function addPet() {
@@ -26,4 +32,25 @@ function addPet() {
     }
   })
 
+}
+
+function registerOwner() {
+  var owners = {};
+  $.each($('#owner-form').serializeArray(), function (i, field) {
+    owners[field.name] = field.value;
+  });
+  console.log('owners: ', owners);
+
+  $.ajax({
+    type: 'POST',
+    url: '/owners',
+    data: owners,
+    success: function(response) {
+      //get Owners();
+      console.log('server is functional', response);
+    },
+    error: function() {
+      console.log('could not register a new owner');
+    }
+  })
 }
