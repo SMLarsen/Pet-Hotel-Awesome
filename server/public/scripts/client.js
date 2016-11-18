@@ -1,5 +1,4 @@
 $(document).ready(function () {
-  console.log("js working");
 
   $('#add-pet').on('click', function(event){
       event.preventDefault();
