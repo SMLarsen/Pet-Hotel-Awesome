@@ -6,6 +6,7 @@ var connectionString = 'postgres://localhost:5432/sigma';
 
 router.post('/', function(req, res) {
   newPet= req.body;
+  console.log("THIS IS THE: ", newPet);
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       console.log('connection error: ', err);
@@ -13,9 +14,9 @@ router.post('/', function(req, res) {
     }
 
     client.query(
-      'INSERT INTO pets (id, name, breed, color, owners_id) ' +
-      'VALUES ($1, $2, $3, $4, $5, $6)',
-      [newPet.id, newPet.name, newPet.breed, newPet.color, newPet.owners_id],
+      'INSERT INTO pets (name, breed, color, owners_id) ' +
+      'VALUES ($1, $2, $3, $4)',
+      [newPet.pet-name, newPet.pet-breed, newPet.pet-color, newPet.owners_id],
       function(err, result) {
         done();
 

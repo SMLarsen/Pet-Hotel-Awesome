@@ -1,25 +1,24 @@
 $(document).ready(function () {
   console.log("js working");
+
+  $('#add-pet').on('click', function(event){
+      event.preventDefault();
+      addPet();
+  });
 });
-
-$('#add-pet').on('click' addPet);
-
 
 function addPet() {
   event.preventDefault();
-
   var pets = {};
-
     $.each($('#pet-form').serializeArray(), function (i, field) {
     pets[field.name] = field.value;
   });
-
-  console.log('pets: ', pet);
+  console.log('pets: ', pets);
 
   $.ajax({
     type: 'POST',
-    url: '/pets',
-    data: book,
+    url: '/pets'
+    data: pets,
     success: function(response) {
       // getPets();
       console.log('server is talking');
