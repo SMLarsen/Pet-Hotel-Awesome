@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
   getPets();
+  getDropDown();
 
   $('#add-pet').on('click', function(event){
       event.preventDefault();
       addPet();
-      getPets();
   });
 
   $('#register-owner').on('click', function(event){
@@ -48,7 +48,7 @@ function getPets() {
       console.log('Database error');
     }
 
-  })
+  });
 }
 
 function appendPets(pets) {
@@ -84,11 +84,36 @@ function registerOwner() {
     url: '/owners',
     data: owners,
     success: function(response) {
-      //get Owners();
+      getDropDown();
       console.log('server is functional', response);
     },
     error: function() {
       console.log('could not register a new owner');
     }
   })
+}
+
+function getDropDown () {
+
+  console.log('get dropdown');
+  $.ajax({
+    type: 'GET',
+    url: '/owners/names',
+    success: function(names) {
+      appendNames(names);
+    },
+    error: function() {
+      console.log('Database error');
+    }
+
+  });
+}
+
+function appendNames (names) {
+  $('#owner-dropdown').empty();
+  console.log('append names');
+  for (var i = 0; i < names.length; i++) {
+    var string = '<option value=' + names[i].id +'>' + names[i].first_name + ' ' + names[i].last_name + '</option>';
+    $('#owner-dropdown').append(string);
+  }
 }

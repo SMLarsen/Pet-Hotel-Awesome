@@ -16,7 +16,7 @@ router.post('/', function(req, res) {
     client.query(
       'INSERT INTO pets (name, breed, color, owners_id) ' +
       'VALUES ($1, $2, $3, $4) RETURNING id AS pet_id',
-      [newPet.petName, newPet.petBreed, newPet.petColor, newPet.owners_id],
+      [newPet.petName, newPet.petBreed, newPet.petColor, newPet.petOwner],
       function(err, result) {
         done();
 
